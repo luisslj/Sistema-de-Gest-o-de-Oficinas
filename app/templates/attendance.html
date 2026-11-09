@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Frequências | Sistema de Gestão de Oficinas</title>
+  </head>
+  <body>
+    <main>
+      <h1>Frequências</h1>
+      <p><a href="{{ url_for('main.index') }}">Voltar ao início</a></p>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul aria-live="polite">
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+
+      <section aria-labelledby="form-title">
+        <h2 id="form-title">Registrar frequência</h2>
+        {% if participants and workshops %}
+          <form method="post" action="{{ url_for('main.create_attendance') }}">
+            <p>
+              <label for="id_participante">Participante *</label>
+              <select id="id_participante" name="id_participante" required>
+                <option value="">Selecione um participante</option>
+                {% for participant in participants %}
+                  <option value="{{ participant['id_participante'] }}">
+                    {{ participant["nome"] }}
+                  </option>
+                {% endfor %}
+              </select>
+            </p>
+            <p>
+              <label for="id_oficina">Oficina *</label>
+              <select id="id_oficina" name="id_oficina" required>
+                <option value="">Selecione uma oficina</option>
+                {% for workshop in workshops %}
+                  <option value="{{ workshop['id_oficina'] }}">
+                    {{ workshop["nome_oficina"] }}
+                  </option>
+                {% endfor %}
+              </select>
+            </p>
+            <p>
+              <label for="data_presenca">Data da frequência *</label>
+              <input id="data_presenca" name="data_presenca" type="date" required>
+            </p>
+            <p>
+              <label for="presente">Presença *</label>
+              <select id="presente" name="presente" required>
+                <option value="1">Presente</option>
+                <option value="0">Ausente</option>
+              </select>
+            </p>
+            <button type="submit">Registrar frequência</button>
+          </form>
+        {% else %}
+          <p>Cadastre pelo menos um participante e uma oficina antes de registrar frequências.</p>
+        {% endif %}
+      </section>
+
+      <section aria-labelledby="list-title">
+        <h2 id="list-title">Frequências registradas</h2>
+        {% if records %}
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Participante</th>
+                <th scope="col">Oficina</th>
+                <th scope="col">Presença</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for record in records %}
+                <tr>
+                  <td>{{ record["data_presenca"] }}</td>
+                  <td>{{ record["nome"] }}</td>
+                  <td>{{ record["nome_oficina"] }}</td>
+                  <td>{{ "Presente" if record["presente"] else "Ausente" }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>Nenhuma frequência registrada.</p>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>

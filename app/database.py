@@ -11,6 +11,7 @@ def get_db() -> sqlite3.Connection:
         database_path.parent.mkdir(parents=True, exist_ok=True)
         g.db = sqlite3.connect(database_path)
         g.db.row_factory = sqlite3.Row
+        g.db.execute("PRAGMA foreign_keys = ON")
     return g.db
 
 
@@ -45,6 +46,22 @@ def init_db() -> None:
             data_fim TEXT,
             status TEXT NOT NULL DEFAULT 'ativa'
                 CHECK (status IN ('ativa', 'inativa'))
+        )
+        """
+    )
+    database.execute(
+        """
+        CREATE TABLE IF NOT EXISTS frequencias (
+            id_frequencia INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_participante INTEGER NOT NULL,
+            id_oficina INTEGER NOT NULL,
+            data_presenca TEXT NOT NULL,
+            presente INTEGER NOT NULL CHECK (presente IN (0, 1)),
+            FOREIGN KEY (id_participante)
+                REFERENCES participantes (id_participante),
+            FOREIGN KEY (id_oficina)
+                REFERENCES oficinas (id_oficina),
+            UNIQUE (id_participante, id_oficina, data_presenca)
         )
         """
     )

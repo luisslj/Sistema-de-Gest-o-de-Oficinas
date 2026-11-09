@@ -1,4 +1,5 @@
 from datetime import date
+import sqlite3
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 
@@ -134,3 +135,103 @@ def create_workshop():
     database.commit()
     flash("Oficina cadastrada com sucesso.", "success")
     return redirect(url_for("main.workshops"))
+
+
+@main.get("/frequencias")
+def attendance():
+    database = get_db()
+    participants = database.execute(
+        "SELECT id_participante, nome FROM participantes ORDER BY nome COLLATE NOCASE"
+    ).fetchall()
+    workshops = database.execute(
+        "SELECT id_oficina, nome_oficina FROM oficinas "
+        "ORDER BY nome_oficina COLLATE NOCASE"
+    ).fetchall()
+    records = database.execute(
+        """
+        SELECT frequencias.data_presenca, frequencias.presente,
+               participantes.nome, oficinas.nome_oficina
+        FROM frequencias
+        JOIN participantes
+            ON participantes.id_participante = frequencias.id_participante
+        JOIN oficinas ON oficinas.id_oficina = frequencias.id_oficina
+        ORDER BY frequencias.data_presenca DESC, participantes.nome COLLATE NOCASE
+        """
+    ).fetchall()
+    return render_template(
+        "attendance.html",
+        participants=participants,
+        workshops=workshops,
+        records=records,
+    )
+
+
+@main.post("/frequencias")
+def create_attendance():
+    participant_id = request.form.get("id_participante", "").strip()
+    workshop_id = request.form.get("id_oficina", "").strip()
+    attendance_date = request.form.get("data_presenca", "").strip()
+    present_value = request.form.get("presente", "")
+
+    if not participant_id or not workshop_id or not attendance_date:
+        flash("Selecione o participante, a oficina e a data da frequência.", "error")
+        return redirect(url_for("main.attendance"))
+
+    try:
+        participant_id_number = int(participant_id)
+        workshop_id_number = int(workshop_id)
+        parsed_date = date.fromisoformat(attendance_date)
+    except ValueError:
+        flash("Informe participante, oficina e data válidos.", "error")
+        return redirect(url_for("main.attendance"))
+
+    if (
+        participant_id != str(participant_id_number)
+        or workshop_id != str(workshop_id_number)
+        or attendance_date != parsed_date.isoformat()
+    ):
+        flash("Informe participante, oficina e data válidos.", "error")
+        return redirect(url_for("main.attendance"))
+
+    if present_value not in {"0", "1"}:
+        flash("Selecione se o participante esteve presente ou ausente.", "error")
+        return redirect(url_for("main.attendance"))
+
+    database = get_db()
+    participant = database.execute(
+        "SELECT 1 FROM participantes WHERE id_participante = ?",
+        (participant_id_number,),
+    ).fetchone()
+    workshop = database.execute(
+        "SELECT 1 FROM oficinas WHERE id_oficina = ?",
+        (workshop_id_number,),
+    ).fetchone()
+    if participant is None or workshop is None:
+        flash("O participante ou a oficina selecionada não foi encontrado.", "error")
+        return redirect(url_for("main.attendance"))
+
+    try:
+        database.execute(
+            """
+            INSERT INTO frequencias
+                (id_participante, id_oficina, data_presenca, presente)
+            VALUES (?, ?, ?, ?)
+            """,
+            (
+                participant_id_number,
+                workshop_id_number,
+                attendance_date,
+                int(present_value),
+            ),
+        )
+        database.commit()
+    except sqlite3.IntegrityError:
+        database.rollback()
+        flash(
+            "Já existe uma frequência registrada para esse participante, oficina e data.",
+            "error",
+        )
+        return redirect(url_for("main.attendance"))
+
+    flash("Frequência registrada com sucesso.", "success")
+    return redirect(url_for("main.attendance"))

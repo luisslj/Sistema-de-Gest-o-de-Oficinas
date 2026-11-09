@@ -77,7 +77,7 @@ python main.py
 
 A aplicação ficará disponível em `http://127.0.0.1:5000`.
 
-O cadastro e a consulta de participantes e oficinas estão disponíveis nos links da página inicial.
+O cadastro e a consulta de participantes, oficinas e frequências estão disponíveis nos links da página inicial.
 Os dados são armazenados no arquivo `instance/participantes.sqlite3`, criado automaticamente
 na primeira inicialização. O banco também pode ser inicializado pela linha de comando com
 `flask --app main init-db`.
