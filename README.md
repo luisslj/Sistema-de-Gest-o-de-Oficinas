@@ -38,19 +38,9 @@ Jinja2
 SQLite (biblioteca `sqlite3` do Python)
 🏗 Arquitetura
 
-O sistema utiliza o padrão MVC (Model-View-Controller).
-
-Model
-
-Responsável pelo armazenamento e manipulação dos dados.
-
-View
-
-Responsável pela interface e interação com o usuário.
-
-Controller
-
-Responsável pelas regras de negócio e comunicação entre interface e banco de dados.
+O sistema utiliza uma organização MVC simplificada, com rotas Flask, templates
+Jinja e acesso direto ao SQLite. Consulte a [documentação do MVP](docs/MVP.md)
+para os requisitos, detalhes da arquitetura e modelo de dados.
 
 🚀 Instalação e Execução
 
@@ -164,14 +154,9 @@ Pesquisar participantes por nome.
 
 🔒 Segurança
 
-O sistema implementa:
-
-Autenticação de usuários;
-Senhas protegidas com PBKDF2;
-Controle de acesso às funcionalidades;
-Proteção contra SQL Injection através do SQLAlchemy;
-Proteção contra XSS utilizando Jinja2;
-Validação de dados no cliente e no servidor.
+As consultas ao banco usam parâmetros e os templates Jinja escapam os valores
+por padrão. O MVP ainda não possui autenticação de usuários nem controle de
+acesso; consulte os [limites conhecidos](docs/MVP.md#limites-conhecidos).
 ♿ Acessibilidade
 
 O projeto foi desenvolvido considerando:
