@@ -42,7 +42,7 @@ class AccessibilityAndResponsiveLayoutTests(unittest.TestCase):
 
         styles = self.client.get("/static/styles.css")
         self.assertEqual(styles.status_code, 200)
-        self.assertIn(b"@media (max-width: 42rem)", styles.data)
+        self.assertIn(b"@media (max-width: 48rem)", styles.data)
         self.assertIn(b":focus-visible", styles.data)
         self.assertIn(b"min-height: 48px", styles.data)
         self.assertIn(b"prefers-reduced-motion", styles.data)

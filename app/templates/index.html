@@ -2,13 +2,30 @@
 
 {% block content %}
   <section class="welcome-panel" aria-labelledby="welcome-title">
-    <h1 id="welcome-title">Sistema de Gestão de Oficinas</h1>
-    <p class="muted">Organize participantes, oficinas e frequências da Associação de Moradores do Bairro Santa Helena.</p>
+    <p class="eyebrow">ASSOCIAÇÃO DE MORADORES · SANTA HELENA</p>
+    <h1 id="welcome-title">Gestão simples,<br>comunidade mais forte.</h1>
+    <p class="welcome-copy">Organize participantes, oficinas e frequências em um só lugar.</p>
     <nav class="home-links" aria-label="Funcionalidades do sistema">
-      <a href="{{ url_for('main.participants') }}">Cadastrar e consultar participantes</a>
-      <a href="{{ url_for('main.workshops') }}">Cadastrar e consultar oficinas</a>
-      <a href="{{ url_for('main.attendance') }}">Registrar e consultar frequências</a>
-      <a href="{{ url_for('main.reports') }}">Consultar relatórios</a>
+      <a class="feature-card" href="{{ url_for('main.participants') }}">
+        <span class="feature-icon" aria-hidden="true">01</span>
+        <span><strong>Participantes</strong><small>Cadastre e consulte pessoas</small></span>
+        <span class="feature-arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="feature-card" href="{{ url_for('main.workshops') }}">
+        <span class="feature-icon" aria-hidden="true">02</span>
+        <span><strong>Oficinas</strong><small>Organize as atividades</small></span>
+        <span class="feature-arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="feature-card" href="{{ url_for('main.attendance') }}">
+        <span class="feature-icon" aria-hidden="true">03</span>
+        <span><strong>Frequências</strong><small>Acompanhe a participação</small></span>
+        <span class="feature-arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="feature-card" href="{{ url_for('main.reports') }}">
+        <span class="feature-icon" aria-hidden="true">04</span>
+        <span><strong>Relatórios</strong><small>Consulte os resultados</small></span>
+        <span class="feature-arrow" aria-hidden="true">→</span>
+      </a>
     </nav>
   </section>
 {% endblock %}

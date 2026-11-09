@@ -3,19 +3,22 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f4f7f5">
+    <meta name="theme-color" content="#102a56">
     <title>{% block title %}Sistema de Gestão de Oficinas{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   </head>
   <body>
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
     <header class="site-header">
-      <a class="brand" href="{{ url_for('main.index') }}">Gestão de Oficinas</a>
+      <a class="brand" href="{{ url_for('main.index') }}">
+        <span class="brand-mark" aria-hidden="true">GO</span>
+        <span>Gestão de Oficinas</span>
+      </a>
       <nav aria-label="Navegação principal">
-        <a href="{{ url_for('main.participants') }}">Participantes</a>
-        <a href="{{ url_for('main.workshops') }}">Oficinas</a>
-        <a href="{{ url_for('main.attendance') }}">Frequências</a>
-        <a href="{{ url_for('main.reports') }}">Relatórios</a>
+        <a href="{{ url_for('main.participants') }}"{% if request.endpoint == 'main.participants' %} class="active" aria-current="page"{% endif %}>Participantes</a>
+        <a href="{{ url_for('main.workshops') }}"{% if request.endpoint == 'main.workshops' %} class="active" aria-current="page"{% endif %}>Oficinas</a>
+        <a href="{{ url_for('main.attendance') }}"{% if request.endpoint == 'main.attendance' %} class="active" aria-current="page"{% endif %}>Frequências</a>
+        <a href="{{ url_for('main.reports') }}"{% if request.endpoint == 'main.reports' %} class="active" aria-current="page"{% endif %}>Relatórios</a>
       </nav>
     </header>
     <main id="conteudo" class="container">
