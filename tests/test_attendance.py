@@ -101,10 +101,51 @@ class AttendanceRegistrationTests(unittest.TestCase):
             },
             follow_redirects=True,
         )
+        invalid_workshop = self.client.post(
+            "/frequencias",
+            data={
+                "id_participante": "1",
+                "id_oficina": "999",
+                "data_presenca": "2026-03-10",
+                "presente": "1",
+            },
+            follow_redirects=True,
+        )
 
         self.assertIn(b"Selecione o participante", missing_fields.data)
         self.assertIn(b"foi encontrado.", invalid_record.data)
         self.assertIn(b"esteve presente ou ausente.", invalid_presence.data)
+        self.assertIn(b"foi encontrado.", invalid_workshop.data)
+        with closing(sqlite3.connect(self.app.config["DATABASE"])) as database:
+            count = database.execute("SELECT COUNT(*) FROM frequencias").fetchone()[0]
+        self.assertEqual(count, 0)
+
+    def test_reports_database_integrity_error_without_claiming_duplicate(self) -> None:
+        with closing(sqlite3.connect(self.app.config["DATABASE"])) as database:
+            database.execute(
+                """
+                CREATE TRIGGER reject_attendance_insert
+                BEFORE INSERT ON frequencias
+                BEGIN
+                    SELECT RAISE(ABORT, 'forced integrity failure');
+                END
+                """
+            )
+            database.commit()
+
+        response = self.client.post(
+            "/frequencias",
+            data={
+                "id_participante": "1",
+                "id_oficina": "1",
+                "data_presenca": "2026-03-10",
+                "presente": "1",
+            },
+            follow_redirects=True,
+        )
+
+        self.assertIn(b"N\xc3\xa3o foi poss\xc3\xadvel gravar a frequ\xc3\xaancia", response.data)
+        self.assertNotIn(b"J\xc3\xa1 existe uma frequ\xc3\xaancia", response.data)
         with closing(sqlite3.connect(self.app.config["DATABASE"])) as database:
             count = database.execute("SELECT COUNT(*) FROM frequencias").fetchone()[0]
         self.assertEqual(count, 0)

@@ -1,7 +1,15 @@
 from datetime import date
 import sqlite3
 
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import (
+    Blueprint,
+    current_app,
+    flash,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 
 from .database import get_db
 
@@ -227,10 +235,29 @@ def create_attendance():
         database.commit()
     except sqlite3.IntegrityError:
         database.rollback()
-        flash(
-            "Já existe uma frequência registrada para esse participante, oficina e data.",
-            "error",
-        )
+        duplicate = database.execute(
+            """
+            SELECT 1 FROM frequencias
+            WHERE id_participante = ? AND id_oficina = ? AND data_presenca = ?
+            """,
+            (participant_id_number, workshop_id_number, attendance_date),
+        ).fetchone()
+        if duplicate is not None:
+            flash(
+                "Já existe uma frequência registrada para esse participante, oficina e data.",
+                "error",
+            )
+        else:
+            current_app.logger.exception(
+                "Falha de integridade ao registrar frequência do participante %s "
+                "na oficina %s.",
+                participant_id_number,
+                workshop_id_number,
+            )
+            flash(
+                "Não foi possível gravar a frequência. Confira os dados do participante e da oficina.",
+                "error",
+            )
         return redirect(url_for("main.attendance"))
 
     flash("Frequência registrada com sucesso.", "success")
