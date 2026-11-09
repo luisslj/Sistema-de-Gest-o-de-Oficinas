@@ -1,18 +1,14 @@
-<!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Oficinas | Sistema de Gestão de Oficinas</title>
-  </head>
-  <body>
-    <main>
+{% extends "base.html" %}
+
+{% block title %}Oficinas | Sistema de Gestão de Oficinas{% endblock %}
+
+{% block content %}
       <h1>Oficinas</h1>
       <p><a href="{{ url_for('main.index') }}">Voltar ao início</a></p>
 
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-          <ul aria-live="polite">
+          <ul class="notice-list" aria-live="polite" aria-atomic="true">
             {% for category, message in messages %}
               <li class="{{ category }}">{{ message }}</li>
             {% endfor %}
@@ -53,6 +49,7 @@
       <section aria-labelledby="list-title">
         <h2 id="list-title">Oficinas cadastradas</h2>
         {% if workshops %}
+          <div class="table-scroll" role="region" aria-label="Tabela de oficinas" tabindex="0">
           <table>
             <thead>
               <tr>
@@ -75,10 +72,9 @@
               {% endfor %}
             </tbody>
           </table>
+          </div>
         {% else %}
           <p>Nenhuma oficina cadastrada.</p>
         {% endif %}
       </section>
-    </main>
-  </body>
-</html>
+{% endblock %}

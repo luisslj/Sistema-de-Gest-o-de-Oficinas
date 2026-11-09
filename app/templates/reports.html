@@ -1,12 +1,8 @@
-<!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Relatórios | Sistema de Gestão de Oficinas</title>
-  </head>
-  <body>
-    <main>
+{% extends "base.html" %}
+
+{% block title %}Relatórios | Sistema de Gestão de Oficinas{% endblock %}
+
+{% block content %}
       <h1>Relatórios de participação</h1>
       <p><a href="{{ url_for('main.index') }}">Voltar ao início</a></p>
 
@@ -41,14 +37,16 @@
               {% endfor %}
             </select>
           </p>
-          <button type="submit">Consultar</button>
-          <a href="{{ url_for('main.reports') }}">Limpar filtros</a>
+          <p class="form-actions">
+            <button type="submit">Consultar</button>
+            <a href="{{ url_for('main.reports') }}">Limpar filtros</a>
+          </p>
         </form>
       </section>
 
       <section aria-labelledby="summary-title">
         <h2 id="summary-title">Resumo</h2>
-        <ul>
+        <ul class="summary-list">
           <li>Total de registros: {{ summary["total"] }}</li>
           <li>Presenças: {{ summary["presentes"] }}</li>
           <li>Ausências: {{ summary["ausencias"] }}</li>
@@ -58,6 +56,7 @@
       <section aria-labelledby="results-title">
         <h2 id="results-title">Registros de frequência</h2>
         {% if records %}
+          <div class="table-scroll" role="region" aria-label="Tabela de registros de frequência" tabindex="0">
           <table>
             <thead>
               <tr>
@@ -78,10 +77,9 @@
               {% endfor %}
             </tbody>
           </table>
+          </div>
         {% else %}
           <p>Nenhuma frequência encontrada para os filtros selecionados.</p>
         {% endif %}
       </section>
-    </main>
-  </body>
-</html>
+{% endblock %}

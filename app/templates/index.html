@@ -1,18 +1,14 @@
-<!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sistema de Gestão de Oficinas</title>
-  </head>
-  <body>
-    <main>
-      <h1>Sistema de Gestão de Oficinas</h1>
-      <p>Estrutura inicial do sistema da Associação de Moradores do Bairro Santa Helena.</p>
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="welcome-panel" aria-labelledby="welcome-title">
+    <h1 id="welcome-title">Sistema de Gestão de Oficinas</h1>
+    <p class="muted">Organize participantes, oficinas e frequências da Associação de Moradores do Bairro Santa Helena.</p>
+    <nav class="home-links" aria-label="Funcionalidades do sistema">
       <a href="{{ url_for('main.participants') }}">Cadastrar e consultar participantes</a>
       <a href="{{ url_for('main.workshops') }}">Cadastrar e consultar oficinas</a>
       <a href="{{ url_for('main.attendance') }}">Registrar e consultar frequências</a>
       <a href="{{ url_for('main.reports') }}">Consultar relatórios</a>
-    </main>
-  </body>
-</html>
+    </nav>
+  </section>
+{% endblock %}

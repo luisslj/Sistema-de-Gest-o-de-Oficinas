@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f7f5">
+    <title>{% block title %}Sistema de Gestão de Oficinas{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+    <header class="site-header">
+      <a class="brand" href="{{ url_for('main.index') }}">Gestão de Oficinas</a>
+      <nav aria-label="Navegação principal">
+        <a href="{{ url_for('main.participants') }}">Participantes</a>
+        <a href="{{ url_for('main.workshops') }}">Oficinas</a>
+        <a href="{{ url_for('main.attendance') }}">Frequências</a>
+        <a href="{{ url_for('main.reports') }}">Relatórios</a>
+      </nav>
+    </header>
+    <main id="conteudo" class="container">
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

@@ -156,10 +156,12 @@ Validação de dados no cliente e no servidor.
 
 O projeto foi desenvolvido considerando:
 
-Interface responsiva;
-Botões com área mínima de toque;
+Interface responsiva para dispositivos móveis;
+Áreas de toque com pelo menos 44 px;
 Rótulos visíveis nos formulários;
 Alto contraste entre texto e fundo;
+Navegação por teclado com indicador de foco e link para pular ao conteúdo;
+Tabelas com rolagem horizontal acessível em telas estreitas;
 Mensagens de erro claras;
 Navegação simples para usuários com pouca experiência tecnológica.
 🌎 ODS Relacionado
