@@ -34,10 +34,8 @@ Python 3.12
 Flask 3.x
 HTML5
 CSS3
-Bootstrap 5
 Jinja2
-SQLAlchemy
-SQLite
+SQLite (biblioteca `sqlite3` do Python)
 🏗 Arquitetura
 
 O sistema utiliza o padrão MVC (Model-View-Controller).
@@ -54,34 +52,56 @@ Controller
 
 Responsável pelas regras de negócio e comunicação entre interface e banco de dados.
 
-🚀 Configuração do Ambiente
+🚀 Instalação e Execução
 
-Requisitos:
+### Requisitos
 
-- Python 3.12 ou superior;
-- Git.
+- Python 3.12 ou superior instalado;
+- Git;
+- PowerShell (Windows).
 
-No PowerShell, na pasta do projeto, crie e ative um ambiente virtual:
+No PowerShell, acesse a pasta do projeto e crie um ambiente virtual Python:
 
 ```powershell
 py -3.12 -m venv .venv
-.\.venv\Scripts\Activate.ps1
 ```
 
-Instale as dependências e inicie a aplicação:
+Ative o ambiente e instale as dependências:
 
 ```powershell
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
+```
+
+Inicie o servidor local:
+
+```powershell
 python main.py
 ```
 
-A aplicação ficará disponível em `http://127.0.0.1:5000`.
+Abra `http://127.0.0.1:5000` no navegador. Para encerrar o servidor, pressione `Ctrl+C` no terminal.
+
+### Banco de dados
+
+O SQLite é inicializado automaticamente quando a aplicação inicia. O arquivo
+`instance/participantes.sqlite3` é criado localmente e não precisa ser versionado.
+Se necessário, com o ambiente virtual ativado, inicialize o banco manualmente:
+
+```powershell
+flask --app main init-db
+```
+
+### Testes
+
+Com as dependências instaladas, execute a suíte automatizada:
+
+```powershell
+python -m unittest discover -s tests -v
+```
 
 O cadastro e a consulta de participantes, oficinas e frequências, além dos relatórios com filtros,
 estão disponíveis nos links da página inicial.
-Os dados são armazenados no arquivo `instance/participantes.sqlite3`, criado automaticamente
-na primeira inicialização. O banco também pode ser inicializado pela linha de comando com
-`flask --app main init-db`.
 
 É possível definir a chave de sessão em produção pela variável de ambiente `SECRET_KEY`.
 
