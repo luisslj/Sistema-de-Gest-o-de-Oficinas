@@ -54,6 +54,40 @@ Controller
 
 Responsável pelas regras de negócio e comunicação entre interface e banco de dados.
 
+🚀 Configuração do Ambiente
+
+Requisitos:
+
+- Python 3.12 ou superior;
+- Git.
+
+No PowerShell, na pasta do projeto, crie e ative um ambiente virtual:
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+Instale as dependências e inicie a aplicação:
+
+```powershell
+python -m pip install -r requirements.txt
+python main.py
+```
+
+A aplicação ficará disponível em `http://127.0.0.1:5000`.
+
+Estrutura inicial:
+
+```text
+app/
+  templates/
+  __init__.py
+  routes.py
+main.py
+requirements.txt
+```
+
 🗄 Banco de Dados
 SQLite
 
