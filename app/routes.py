@@ -262,3 +262,66 @@ def create_attendance():
 
     flash("Frequência registrada com sucesso.", "success")
     return redirect(url_for("main.attendance"))
+
+
+@main.get("/relatorios")
+def reports():
+    database = get_db()
+    participants = database.execute(
+        "SELECT id_participante, nome FROM participantes ORDER BY nome COLLATE NOCASE"
+    ).fetchall()
+    workshops = database.execute(
+        "SELECT id_oficina, nome_oficina FROM oficinas "
+        "ORDER BY nome_oficina COLLATE NOCASE"
+    ).fetchall()
+
+    participant_id = request.args.get("id_participante", "").strip()
+    workshop_id = request.args.get("id_oficina", "").strip()
+    conditions = []
+    parameters: list[int] = []
+
+    if participant_id:
+        try:
+            participant_id_number = int(participant_id)
+        except ValueError:
+            participant_id_number = 0
+        conditions.append("frequencias.id_participante = ?")
+        parameters.append(participant_id_number)
+
+    if workshop_id:
+        try:
+            workshop_id_number = int(workshop_id)
+        except ValueError:
+            workshop_id_number = 0
+        conditions.append("frequencias.id_oficina = ?")
+        parameters.append(workshop_id_number)
+
+    where_clause = f"WHERE {' AND '.join(conditions)}" if conditions else ""
+    records = database.execute(
+        f"""
+        SELECT participantes.id_participante, participantes.nome,
+               oficinas.id_oficina, oficinas.nome_oficina,
+               frequencias.data_presenca, frequencias.presente
+        FROM frequencias
+        JOIN participantes
+            ON participantes.id_participante = frequencias.id_participante
+        JOIN oficinas ON oficinas.id_oficina = frequencias.id_oficina
+        {where_clause}
+        ORDER BY frequencias.data_presenca DESC, participantes.nome COLLATE NOCASE
+        """,
+        parameters,
+    ).fetchall()
+    summary = {
+        "total": len(records),
+        "presentes": sum(record["presente"] for record in records),
+        "ausencias": sum(not record["presente"] for record in records),
+    }
+    return render_template(
+        "reports.html",
+        participants=participants,
+        workshops=workshops,
+        records=records,
+        summary=summary,
+        selected_participant=participant_id,
+        selected_workshop=workshop_id,
+    )

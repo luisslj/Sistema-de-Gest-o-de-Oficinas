@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Relatórios | Sistema de Gestão de Oficinas</title>
+  </head>
+  <body>
+    <main>
+      <h1>Relatórios de participação</h1>
+      <p><a href="{{ url_for('main.index') }}">Voltar ao início</a></p>
+
+      <section aria-labelledby="filter-title">
+        <h2 id="filter-title">Consultar frequências</h2>
+        <form method="get" action="{{ url_for('main.reports') }}">
+          <p>
+            <label for="id_participante">Participante</label>
+            <select id="id_participante" name="id_participante">
+              <option value="">Todos os participantes</option>
+              {% for participant in participants %}
+                <option
+                  value="{{ participant['id_participante'] }}"
+                  {% if selected_participant == participant['id_participante'] | string %}selected{% endif %}
+                >
+                  {{ participant["nome"] }}
+                </option>
+              {% endfor %}
+            </select>
+          </p>
+          <p>
+            <label for="id_oficina">Oficina</label>
+            <select id="id_oficina" name="id_oficina">
+              <option value="">Todas as oficinas</option>
+              {% for workshop in workshops %}
+                <option
+                  value="{{ workshop['id_oficina'] }}"
+                  {% if selected_workshop == workshop['id_oficina'] | string %}selected{% endif %}
+                >
+                  {{ workshop["nome_oficina"] }}
+                </option>
+              {% endfor %}
+            </select>
+          </p>
+          <button type="submit">Consultar</button>
+          <a href="{{ url_for('main.reports') }}">Limpar filtros</a>
+        </form>
+      </section>
+
+      <section aria-labelledby="summary-title">
+        <h2 id="summary-title">Resumo</h2>
+        <ul>
+          <li>Total de registros: {{ summary["total"] }}</li>
+          <li>Presenças: {{ summary["presentes"] }}</li>
+          <li>Ausências: {{ summary["ausencias"] }}</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="results-title">
+        <h2 id="results-title">Registros de frequência</h2>
+        {% if records %}
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Participante</th>
+                <th scope="col">Oficina</th>
+                <th scope="col">Data</th>
+                <th scope="col">Situação</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for record in records %}
+                <tr>
+                  <td>{{ record["nome"] }}</td>
+                  <td>{{ record["nome_oficina"] }}</td>
+                  <td>{{ record["data_presenca"] }}</td>
+                  <td>{{ "Presente" if record["presente"] else "Ausente" }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>Nenhuma frequência encontrada para os filtros selecionados.</p>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>
