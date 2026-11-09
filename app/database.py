@@ -35,6 +35,19 @@ def init_db() -> None:
         )
         """
     )
+    database.execute(
+        """
+        CREATE TABLE IF NOT EXISTS oficinas (
+            id_oficina INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome_oficina TEXT NOT NULL,
+            descricao TEXT NOT NULL,
+            data_inicio TEXT NOT NULL,
+            data_fim TEXT,
+            status TEXT NOT NULL DEFAULT 'ativa'
+                CHECK (status IN ('ativa', 'inativa'))
+        )
+        """
+    )
     database.commit()
 
 

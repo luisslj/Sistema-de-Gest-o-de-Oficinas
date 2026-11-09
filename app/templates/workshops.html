@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Oficinas | Sistema de Gestão de Oficinas</title>
+  </head>
+  <body>
+    <main>
+      <h1>Oficinas</h1>
+      <p><a href="{{ url_for('main.index') }}">Voltar ao início</a></p>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul aria-live="polite">
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+
+      <section aria-labelledby="form-title">
+        <h2 id="form-title">Cadastrar oficina</h2>
+        <form method="post" action="{{ url_for('main.create_workshop') }}">
+          <p>
+            <label for="nome_oficina">Nome da oficina *</label>
+            <input id="nome_oficina" name="nome_oficina" type="text" required maxlength="200">
+          </p>
+          <p>
+            <label for="descricao">Descrição *</label>
+            <textarea id="descricao" name="descricao" required maxlength="2000"></textarea>
+          </p>
+          <p>
+            <label for="data_inicio">Data de início *</label>
+            <input id="data_inicio" name="data_inicio" type="date" required>
+          </p>
+          <p>
+            <label for="data_fim">Data de término</label>
+            <input id="data_fim" name="data_fim" type="date">
+          </p>
+          <p>
+            <label for="status">Status</label>
+            <select id="status" name="status">
+              <option value="ativa">Ativa</option>
+              <option value="inativa">Inativa</option>
+            </select>
+          </p>
+          <button type="submit">Cadastrar oficina</button>
+        </form>
+      </section>
+
+      <section aria-labelledby="list-title">
+        <h2 id="list-title">Oficinas cadastradas</h2>
+        {% if workshops %}
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Início</th>
+                <th scope="col">Término</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for workshop in workshops %}
+                <tr>
+                  <td>{{ workshop["nome_oficina"] }}</td>
+                  <td>{{ workshop["descricao"] }}</td>
+                  <td>{{ workshop["data_inicio"] }}</td>
+                  <td>{{ workshop["data_fim"] or "—" }}</td>
+                  <td>{{ "Ativa" if workshop["status"] == "ativa" else "Inativa" }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>Nenhuma oficina cadastrada.</p>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>
