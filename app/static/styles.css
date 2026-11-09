@@ -1,20 +1,19 @@
 :root {
   color-scheme: light;
   font-family: Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  color: #172b4d;
-  background: #f3f6fb;
+  color: #17352b;
+  background: #f3f8f5;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  --blue-950: #102a56;
-  --blue-900: #173b74;
-  --blue-800: #1d4b91;
-  --blue-700: #2563b8;
-  --blue-100: #e7effb;
-  --blue-050: #f4f8ff;
-  --text-muted: #60728d;
-  --line: #dce5f1;
+  --green-950: #123d2e;
+  --green-900: #19553f;
+  --green-800: #176b4d;
+  --green-700: #21865f;
+  --green-100: #e3f2e9;
+  --text-muted: #5b7165;
+  --line: #d8e7dd;
   --surface: #fff;
-  --focus-ring: #e18b16;
+  --focus-ring: #ad4b00;
 }
 
 * {
@@ -26,18 +25,18 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    radial-gradient(ellipse at 82% 0, rgb(208 225 250 / 42%), transparent 34rem),
-    #f3f6fb;
+    radial-gradient(ellipse at 82% 0, rgb(190 223 201 / 42%), transparent 34rem),
+    #f3f8f5;
   line-height: 1.55;
 }
 
 a {
-  color: var(--blue-800);
+  color: var(--green-800);
   text-underline-offset: 0.18em;
 }
 
 a:hover {
-  color: var(--blue-950);
+  color: var(--green-950);
 }
 
 a:focus-visible,
@@ -58,7 +57,7 @@ textarea:focus-visible {
   transform: translateY(-160%);
   border-radius: 0.55rem;
   color: #fff;
-  background: var(--blue-950);
+  background: var(--green-950);
 }
 
 .skip-link:focus {
@@ -75,8 +74,8 @@ textarea:focus-visible {
   gap: 1.5rem;
   padding: 0.8rem max(1.25rem, calc((100% - 74rem) / 2));
   color: #fff;
-  background: linear-gradient(110deg, #102a56, #1a4684);
-  box-shadow: 0 8px 26px rgb(16 42 86 / 16%);
+  background: linear-gradient(110deg, #123d2e, #1d684a);
+  box-shadow: 0 8px 26px rgb(18 61 46 / 16%);
 }
 
 .brand {
@@ -117,7 +116,7 @@ textarea:focus-visible {
   padding: 0.55rem 0.85rem;
   border: 1px solid transparent;
   border-radius: 0.55rem;
-  color: #e6efff;
+  color: #e7f4ec;
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
@@ -145,7 +144,7 @@ p {
 
 h1,
 h2 {
-  color: var(--blue-950);
+  color: var(--green-950);
   line-height: 1.2;
   letter-spacing: -0.035em;
 }
@@ -183,10 +182,10 @@ section,
   overflow: hidden;
   margin-top: 1rem;
   padding: clamp(1.5rem, 5vw, 3.5rem);
-  border-color: #d9e6f8;
+  border-color: #d4e8db;
   background:
-    radial-gradient(circle at 92% 9%, rgb(183 211 249 / 36%), transparent 19rem),
-    linear-gradient(135deg, #fff 32%, #f3f8ff);
+    radial-gradient(circle at 92% 9%, rgb(185 222 199 / 40%), transparent 19rem),
+    linear-gradient(135deg, #fff 32%, #f2faf5);
 }
 
 .welcome-panel h1 {
@@ -198,7 +197,7 @@ section,
 
 .eyebrow {
   margin-bottom: 0.9rem;
-  color: var(--blue-700);
+  color: var(--green-700);
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -227,7 +226,7 @@ section,
   padding: 1rem;
   border: 1px solid var(--line);
   border-radius: 0.8rem;
-  color: var(--blue-950);
+  color: var(--green-950);
   background: rgb(255 255 255 / 90%);
   text-decoration: none;
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
@@ -235,9 +234,9 @@ section,
 
 .feature-card:hover {
   transform: translateY(-2px);
-  border-color: #a9c5ec;
-  color: var(--blue-950);
-  box-shadow: 0 10px 24px rgb(23 59 116 / 10%);
+  border-color: #a7cfb5;
+  color: var(--green-950);
+  box-shadow: 0 10px 24px rgb(25 85 63 / 10%);
 }
 
 .feature-icon {
@@ -246,8 +245,8 @@ section,
   height: 42px;
   place-items: center;
   border-radius: 13px;
-  color: var(--blue-800);
-  background: var(--blue-100);
+  color: var(--green-800);
+  background: var(--green-100);
   font-size: 0.76rem;
   font-weight: 800;
 }
@@ -268,7 +267,7 @@ section,
 }
 
 .feature-arrow {
-  color: var(--blue-700);
+  color: var(--green-700);
   font-size: 1.3rem;
 }
 
@@ -283,7 +282,7 @@ form p {
 label {
   display: block;
   margin-bottom: 0.4rem;
-  color: #263d5e;
+  color: #294b3b;
   font-size: 0.9rem;
   font-weight: 700;
 }
@@ -295,9 +294,9 @@ textarea {
   width: 100%;
   min-height: 48px;
   padding: 0.7rem 0.85rem;
-  border: 1px solid #c6d3e4;
+  border: 1px solid #c6d9cd;
   border-radius: 0.55rem;
-  color: #172b4d;
+  color: #17352b;
   background: #fff;
   font: inherit;
   transition: border-color 150ms ease, box-shadow 150ms ease;
@@ -305,20 +304,20 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-  color: #7889a1;
+  color: #71877a;
 }
 
 input:hover,
 select:hover,
 textarea:hover {
-  border-color: #91aaca;
+  border-color: #91b5a0;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: var(--blue-700);
-  box-shadow: 0 0 0 3px rgb(37 99 184 / 13%);
+  border-color: var(--green-700);
+  box-shadow: 0 0 0 3px rgb(33 134 95 / 13%);
 }
 
 textarea {
@@ -329,11 +328,11 @@ textarea {
 button {
   min-height: 48px;
   padding: 0.7rem 1.15rem;
-  border: 1px solid var(--blue-800);
+  border: 1px solid var(--green-800);
   border-radius: 0.55rem;
   color: #fff;
-  background: linear-gradient(135deg, var(--blue-800), var(--blue-700));
-  box-shadow: 0 4px 10px rgb(37 99 184 / 16%);
+  background: linear-gradient(135deg, var(--green-800), var(--green-700));
+  box-shadow: 0 4px 10px rgb(33 134 95 / 16%);
   font: inherit;
   font-weight: 700;
   cursor: pointer;
@@ -343,7 +342,7 @@ button {
 button:hover {
   transform: translateY(-1px);
   filter: brightness(0.94);
-  box-shadow: 0 7px 16px rgb(37 99 184 / 23%);
+  box-shadow: 0 7px 16px rgb(33 134 95 / 23%);
 }
 
 .table-scroll {
@@ -372,8 +371,8 @@ td {
 }
 
 th {
-  color: #294668;
-  background: #eef4fc;
+  color: #28523d;
+  background: #eaf4ed;
   font-size: 0.8rem;
   font-weight: 750;
   letter-spacing: 0.025em;
@@ -385,7 +384,7 @@ tbody tr {
 }
 
 tbody tr:hover {
-  background: #f7faff;
+  background: #f6faf7;
 }
 
 tbody tr:last-child td {
@@ -400,8 +399,8 @@ td {
   padding: 0.9rem 1rem 0.9rem 2.5rem;
   border: 1px solid #cfdef1;
   border-radius: 0.65rem;
-  color: #28466f;
-  background: #edf4ff;
+  color: #28513d;
+  background: #edf7f0;
 }
 
 .notice-list .success {
@@ -423,10 +422,10 @@ td {
 .summary-list li {
   min-height: 84px;
   padding: 1rem;
-  border: 1px solid #d6e4f6;
+  border: 1px solid #d4e7da;
   border-radius: 0.75rem;
-  color: var(--blue-900);
-  background: linear-gradient(145deg, #f8fbff, #edf4ff);
+  color: var(--green-900);
+  background: linear-gradient(145deg, #f8fcf9, #edf7f0);
   font-weight: 700;
 }
 
