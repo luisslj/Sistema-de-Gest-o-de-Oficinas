@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Participantes | Sistema de Gestão de Oficinas</title>
+  </head>
+  <body>
+    <main>
+      <h1>Participantes</h1>
+      <p><a href="{{ url_for('main.index') }}">Voltar ao início</a></p>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul aria-live="polite">
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+
+      <section aria-labelledby="form-title">
+        <h2 id="form-title">Cadastrar participante</h2>
+        <form method="post" action="{{ url_for('main.create_participant') }}">
+          <p>
+            <label for="nome">Nome *</label>
+            <input id="nome" name="nome" type="text" required maxlength="200">
+          </p>
+          <p>
+            <label for="telefone">Telefone</label>
+            <input id="telefone" name="telefone" type="tel" maxlength="30">
+          </p>
+          <p>
+            <label for="data_nascimento">Data de nascimento</label>
+            <input id="data_nascimento" name="data_nascimento" type="date">
+          </p>
+          <p>
+            <label for="endereco">Endereço</label>
+            <input id="endereco" name="endereco" type="text" maxlength="300">
+          </p>
+          <p>
+            <label for="status">Status</label>
+            <select id="status" name="status">
+              <option value="ativo">Ativo</option>
+              <option value="inativo">Inativo</option>
+            </select>
+          </p>
+          <button type="submit">Cadastrar participante</button>
+        </form>
+      </section>
+
+      <section aria-labelledby="list-title">
+        <h2 id="list-title">Participantes cadastrados</h2>
+        {% if participants %}
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">Data de nascimento</th>
+                <th scope="col">Endereço</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for participant in participants %}
+                <tr>
+                  <td>{{ participant["nome"] }}</td>
+                  <td>{{ participant["telefone"] or "—" }}</td>
+                  <td>{{ participant["data_nascimento"] or "—" }}</td>
+                  <td>{{ participant["endereco"] or "—" }}</td>
+                  <td>{{ "Ativo" if participant["status"] == "ativo" else "Inativo" }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>Nenhum participante cadastrado.</p>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>
