@@ -90,6 +90,20 @@ Com as dependências instaladas, execute a suíte automatizada:
 python -m unittest discover -s tests -v
 ```
 
+### Deploy no Render
+
+O arquivo `render.yaml` configura o serviço web gratuito. Para publicar:
+
+1. Envie estas alterações para o GitHub.
+2. No Render, escolha **New > Blueprint** e conecte este repositório.
+3. Confirme a criação do serviço `sistema-gestao-oficinas`.
+4. Após o deploy, abra a URL gerada pelo Render.
+
+O Render gera a variável `SECRET_KEY` automaticamente. Atenção: no plano
+gratuito, o arquivo SQLite fica em armazenamento efêmero e pode ser apagado
+quando o serviço reinicia ou é implantado novamente. Use essa configuração
+somente para testes; não cadastre dados importantes.
+
 O cadastro e a consulta de participantes, oficinas e frequências, além dos relatórios com filtros,
 estão disponíveis nos links da página inicial.
 
